@@ -9,17 +9,14 @@ RSpec.describe MoviesController, type: :controller do
   end
 
   describe 'GET show' do
-    movie = Movie.create!(title: 'title', description: 'desc',
-                      duration: '1h 30mins', release_date: Date.current,
-                      cast: 'very cool cast')
     it 'returns http status success' do
-      get :show, params: { id: movie.id }
+      get :show, params: { id: create(:movie).id }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET new' do
-    before { sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password') }
+    before { sign_in create(:user) }
 
     it 'returns http status success' do
       get :new
@@ -28,7 +25,7 @@ RSpec.describe MoviesController, type: :controller do
   end
 
   describe 'POST create' do
-    before { sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password') }
+    before { sign_in create(:user) }
 
     it 'creates new movie' do
       expect do
@@ -46,33 +43,26 @@ RSpec.describe MoviesController, type: :controller do
   end
 
   describe 'GET edit' do
-    before do
-      @movie = Movie.create!(title: 'title', description: 'desc',
-                              duration: '1h 30mins', release_date: Date.current,
-                              cast: 'very cool cast')
-      sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password')
-    end
+    before { sign_in create(:user) }
 
     it 'returns http status success' do
-      get :new, params: { id: @movie.id }
+      get :new, params: { id: create(:movie).id }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'PUT update' do
     before do
-      @movie = Movie.create!(title: 'title', description: 'desc',
-                              duration: '1h 30mins', release_date: Date.current,
-                              cast: 'very cool cast')
-      sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password')
+      @movie = create(:movie)
+      sign_in create(:user)
     end
 
     it 'updates existing movie' do
-        put :update, params: {
-          id: @movie.id,
-          movie: { title: 'new title' }
-        }
-        expect(@movie.reload.title).to eq('new title')
+      put :update, params: {
+        id: @movie.id,
+        movie: { title: 'new title' }
+      }
+      expect(@movie.reload.title).to eq('new title')
     end
   end
 end
