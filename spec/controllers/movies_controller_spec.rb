@@ -26,4 +26,22 @@ RSpec.describe MoviesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'POST create' do
+    before { sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password') }
+
+    it 'creates new movie' do
+      expect do
+        post :create, params: {
+          movie: {
+            title: 'title',
+            description: 'desc',
+            duration: '1h 30mins',
+            release_date: Date.current,
+            cast: 'very cool cast'
+          }
+        }
+      end.to change(Movie, :count).by(1)
+    end
+  end
 end
