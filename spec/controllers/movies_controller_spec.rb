@@ -7,4 +7,14 @@ RSpec.describe MoviesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'GET show' do
+    movie = Movie.create!(title: 'title', description: 'desc',
+                      duration: '1h 30mins', release_date: Date.current,
+                      cast: 'very cool cast')
+    it 'returns http status success' do
+      get :show, params: { id: movie.id }
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
