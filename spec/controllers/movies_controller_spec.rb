@@ -58,4 +58,21 @@ RSpec.describe MoviesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'PUT update' do
+    before do
+      @movie = Movie.create!(title: 'title', description: 'desc',
+                              duration: '1h 30mins', release_date: Date.current,
+                              cast: 'very cool cast')
+      sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password')
+    end
+
+    it 'updates existing movie' do
+        put :update, params: {
+          id: @movie.id,
+          movie: { title: 'new title' }
+        }
+        expect(@movie.reload.title).to eq('new title')
+    end
+  end
 end
