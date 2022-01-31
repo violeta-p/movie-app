@@ -17,4 +17,13 @@ RSpec.describe MoviesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'GET new' do
+    before { sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password') }
+
+    it 'returns http status success' do
+      get :new
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
