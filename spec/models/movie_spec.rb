@@ -5,30 +5,10 @@ RSpec.describe Movie, type: :model do
     subject { build(:movie) }
 
     it { expect(subject).to be_valid }
-
-    it 'not valid without title' do
-      subject.title = ''
-      expect(subject).to_not be_valid
-    end
-
-    it 'not valid without description' do
-      subject.description = ''
-      expect(subject).to_not be_valid
-    end
-
-    it 'not valid without duration' do
-      subject.duration = ''
-      expect(subject).to_not be_valid
-    end
-
-    it 'not valid without release_date' do
-      subject.release_date = ''
-      expect(subject).to_not be_valid
-    end
-
-    it 'not valid without cast' do
-      subject.cast = ''
-      expect(subject).to_not be_valid
-    end
+    it { expect(subject).to validate_presence_of(:title) }
+    it { expect(subject).to validate_presence_of(:description) }
+    it { expect(subject).to validate_presence_of(:duration) }
+    it { expect(subject).to validate_presence_of(:release_date) }
+    it { expect(subject).to validate_presence_of(:cast) }
   end
 end
