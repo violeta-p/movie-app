@@ -44,4 +44,18 @@ RSpec.describe MoviesController, type: :controller do
       end.to change(Movie, :count).by(1)
     end
   end
+
+  describe 'GET edit' do
+    before do
+      @movie = Movie.create!(title: 'title', description: 'desc',
+                              duration: '1h 30mins', release_date: Date.current,
+                              cast: 'very cool cast')
+      sign_in User.create!(email: 'user@test.com', password: 'password', password_confirmation: 'password')
+    end
+
+    it 'returns http status success' do
+      get :new, params: { id: @movie.id }
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
