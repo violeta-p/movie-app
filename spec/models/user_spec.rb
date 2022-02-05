@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Movie, type: :model do
+RSpec.describe User, type: :model do
   describe 'validations' do
     subject do
       User.new(email: 'user@test.com', password: 'password', password_confirmation: 'password')
